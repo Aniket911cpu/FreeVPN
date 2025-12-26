@@ -1,42 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VPN Proxy</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FreeProxy</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+
   <link rel="stylesheet" href="popup.css">
 </head>
+
 <body>
+  <div class="app">
 
-  <div class="container">
-    <div class="header">
-      <h2>Free VPN</h2>
-      <div id="status-indicator" class="status-badge">Unprotected</div>
-    </div>
+    <!-- HEADER -->
+    <header class="header">
+      <button class="icon-btn">
+        <span class="material-symbols-outlined">settings</span>
+      </button>
 
-    <div class="control-panel">
-      <div class="toggle-wrapper">
-        <label class="switch">
-          <input type="checkbox" id="power-btn">
-          <span class="slider round"></span>
-        </label>
+      <h1 class="title">FreeProxy</h1>
+
+      <button class="icon-btn premium">
+        <span class="material-symbols-outlined">workspace_premium</span>
+      </button>
+    </header>
+
+    <!-- STATUS -->
+    <section class="status">
+      <div class="status-row">
+        <span class="dot"></span>
+        <h2>UNPROTECTED</h2>
       </div>
-      
-      <div class="location-wrapper">
-        <label for="location-select">Server Location</label>
-        <select id="location-select">
-          <option value="us">🇺🇸 United States</option>
-          <option value="uk">🇬🇧 United Kingdom</option>
-          <option value="de">🇩🇪 Germany</option>
-        </select>
-      </div>
-    </div>
+      <p>Your IP is visible to websites</p>
+      <div class="ip-badge">IP: 192.168.1.104</div>
+    </section>
 
-    <div class="footer">
-      <p>Secure Proxy Connection</p>
-    </div>
+    <!-- POWER BUTTON -->
+    <section class="power-area">
+      <div class="ring ring-1"></div>
+      <div class="ring ring-2"></div>
+      <div class="glow"></div>
+
+      <button class="power-btn">
+        <span class="material-symbols-outlined">power_settings_new</span>
+      </button>
+    </section>
+
+    <!-- TIMER -->
+    <section class="timer-card">
+      <span class="label">TIME</span>
+      <span class="time">00:00:00</span>
+    </section>
+
+    <!-- LOCATION -->
+    <section class="location-card">
+      <div class="location-left">
+        <img src="https://flagcdn.com/w40/us.png" alt="US">
+        <div>
+          <span class="small">Current Location</span>
+          <strong>United States</strong>
+        </div>
+      </div>
+
+      <div class="location-right">
+        <div class="signal">
+          <span></span><span></span><span></span><span></span>
+        </div>
+        <span class="material-symbols-outlined">expand_more</span>
+      </div>
+    </section>
+
+    <!-- SPEED -->
+    <section class="speed">
+      <div>↓ 0.0 MB/s</div>
+      <div>↑ 0.0 MB/s</div>
+    </section>
+
   </div>
-
-  <script src="popup.js"></script>
 </body>
 </html>

@@ -1,44 +1,35 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const powerBtn = document.getElementById('power-btn');
-    const locationSelect = document.getElementById('location-select');
-    const statusIndicator = document.getElementById('status-indicator');
-  
-    // 1. Load saved state from storage when popup opens
-    chrome.storage.local.get(['isConnected', 'selectedLocation'], (data) => {
-      const isConnected = data.isConnected ?? false;
-      const savedLocation = data.selectedLocation ?? 'us';
-  
-      // Update UI elements to match state
-      powerBtn.checked = isConnected;
-      locationSelect.value = savedLocation;
-      updateStatusUI(isConnected);
-    });
-  
-    // 2. Handle Power Button Toggle
-    powerBtn.addEventListener('change', () => {
-      const isConnected = powerBtn.checked;
-      updateStatusUI(isConnected);
-      
-      // Save state to storage (Background script will see this change and act)
-      chrome.storage.local.set({ isConnected: isConnected });
-    });
-  
-    // 3. Handle Location Change
-    locationSelect.addEventListener('change', () => {
-      const newLocation = locationSelect.value;
-      
-      // Save new location (Background script will update proxy if currently connected)
-      chrome.storage.local.set({ selectedLocation: newLocation });
-    });
-  
-    // Helper to update text/colors
-    function updateStatusUI(isConnected) {
-      if (isConnected) {
-        statusIndicator.textContent = "Protected";
-        statusIndicator.classList.add('protected');
-      } else {
-        statusIndicator.textContent = "Unprotected";
-        statusIndicator.classList.remove('protected');
-      }
-    }
+document.addEventListener("DOMContentLoaded", () => {
+  const powerBtn = document.querySelector(".power-btn");
+  const statusText = document.querySelector(".status h2");
+  const statusDot = document.querySelector(".dot");
+
+  let isConnected = false;
+
+  // Load saved state
+  chrome.storage.local.get(["isConnected"], (data) => {
+    isConnected = data.isConnected ?? false;
+    updateUI(isConnected);
   });
+
+  // Power button click
+  powerBtn.addEventListener("click", () => {
+    isConnected = !isConnected;
+
+    chrome.storage.local.set({ isConnected });
+    updateUI(isConnected);
+  });
+
+  function updateUI(connected) {
+    if (connected) {
+      statusText.textContent = "PROTECTED";
+      statusDot.style.background = "#30e87a";
+      statusDot.style.boxShadow = "0 0 10px #30e87a";
+      powerBtn.style.boxShadow = "0 0 50px rgba(48,232,122,0.6)";
+    } else {
+      statusText.textContent = "UNPROTECTED";
+      statusDot.style.background = "#ff4d4d";
+      statusDot.style.boxShadow = "0 0 10px #ff4d4d";
+      powerBtn.style.boxShadow = "0 0 40px rgba(48,232,122,0.3)";
+    }
+  }
+});
