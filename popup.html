@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VPN Proxy</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+
+  <div class="container">
+    <div class="header">
+      <h2>Free VPN</h2>
+      <div id="status-indicator" class="status-badge">Unprotected</div>
+    </div>
+
+    <div class="control-panel">
+      <div class="toggle-wrapper">
+        <label class="switch">
+          <input type="checkbox" id="power-btn">
+          <span class="slider round"></span>
+        </label>
+      </div>
+      
+      <div class="location-wrapper">
+        <label for="location-select">Server Location</label>
+        <select id="location-select">
+          <option value="us">🇺🇸 United States</option>
+          <option value="uk">🇬🇧 United Kingdom</option>
+          <option value="de">🇩🇪 Germany</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="footer">
+      <p>Secure Proxy Connection</p>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
