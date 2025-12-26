@@ -1,86 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FreeProxy</title>
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
-
-  <!-- Material Icons -->
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
-
   <link rel="stylesheet" href="popup.css">
 </head>
-
 <body>
-  <div class="app">
 
-    <!-- HEADER -->
-    <header class="header">
-      <button class="icon-btn">
-        <span class="material-symbols-outlined">settings</span>
+  <div class="app-container">
+    
+    <div id="overlay" class="overlay hidden"></div>
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar-header">
+        <h3>Menu</h3>
+        <button id="close-sidebar" class="icon-btn-sm">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/></svg>
+        </button>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="#" class="nav-item active">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z"/></svg>
+          Home
+        </a>
+        <a href="#" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.9,17.39C17.64,19.36 15.97,20.93 14,20.93C11.97,20.93 10.3,19.33 10.03,17.32C9.85,17.3 9.68,17.29 9.5,17.29C6.46,17.29 4,19.75 4,22.79V23H20V22.79C20,19.86 17.76,17.47 14.89,17.29C14.71,17.29 14.53,17.3 14.36,17.32C15.63,16.89 16.79,15.95 17.47,14.74C16.87,15.17 16.14,15.46 15.35,15.63C16.62,14.88 17.5,13.5 17.5,12C17.5,10.66 16.8,9.45 15.75,8.69C16.69,9.58 17.96,10.13 19.36,10.13C21.75,10.13 23.77,8.5 24.3,6.29C23.59,6.72 22.8,7.03 21.96,7.2C22.63,6.8 23.14,6.16 23.38,5.41C22.61,5.87 21.76,6.2 20.85,6.38C20.13,5.61 19.1,5.13 17.96,5.13C15.77,5.13 14,6.9 14,9.09C14,9.4 14.03,9.7 14.1,9.97C10.8,9.81 7.85,8.23 5.87,5.8C5.53,6.38 5.34,7.06 5.34,7.78C5.34,9.16 6.04,10.37 7.11,11.08C6.46,11.06 5.85,10.88 5.31,10.58V10.63C5.31,12.55 6.68,14.15 8.47,14.5C8.14,14.59 7.79,14.64 7.43,14.64C7.18,14.64 6.94,14.62 6.7,14.57C7.2,16.15 8.66,17.29 10.4,17.32C9.21,18.25 7.71,18.8 6.08,18.8C5.79,18.8 5.5,18.79 5.22,18.75C6.73,19.72 8.53,20.29 10.46,20.29C16.75,20.29 20.19,15.08 20.19,10.53C20.19,10.38 20.19,10.24 20.18,10.09C20.85,9.6 21.43,8.98 21.89,8.27L17.9,17.39Z"/></svg>
+          Server List
+        </a>
+        <a href="#" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"/></svg>
+          Account
+        </a>
+        <a href="#" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/></svg>
+          Settings
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <p>Version 1.0.0</p>
+      </div>
+    </aside>
+
+    <header>
+      <button class="icon-btn" id="menu-btn">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z"/></svg>
       </button>
-
-      <h1 class="title">FreeProxy</h1>
-
+      <h2>FreeProxy</h2>
       <button class="icon-btn premium">
-        <span class="material-symbols-outlined">workspace_premium</span>
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12,2L9,9H2L7,14L5,21L12,17L19,21L17,14L22,9H15L12,2Z"/></svg>
       </button>
     </header>
 
-    <!-- STATUS -->
-    <section class="status">
-      <div class="status-row">
-        <span class="dot"></span>
-        <h2>UNPROTECTED</h2>
-      </div>
-      <p>Your IP is visible to websites</p>
-      <div class="ip-badge">IP: 192.168.1.104</div>
-    </section>
-
-    <!-- POWER BUTTON -->
-    <section class="power-area">
-      <div class="ring ring-1"></div>
-      <div class="ring ring-2"></div>
-      <div class="glow"></div>
-
-      <button class="power-btn">
-        <span class="material-symbols-outlined">power_settings_new</span>
-      </button>
-    </section>
-
-    <!-- TIMER -->
-    <section class="timer-card">
-      <span class="label">TIME</span>
-      <span class="time">00:00:00</span>
-    </section>
-
-    <!-- LOCATION -->
-    <section class="location-card">
-      <div class="location-left">
-        <img src="https://flagcdn.com/w40/us.png" alt="US">
-        <div>
-          <span class="small">Current Location</span>
-          <strong>United States</strong>
+    <main>
+      <div class="status-container">
+        <div class="status-badge" id="connection-status">
+          <span class="status-dot"></span>
+          <h1 id="status-text">UNPROTECTED</h1>
+        </div>
+        <p class="status-subtext" id="status-subtext">Your IP is visible to websites</p>
+        <div class="ip-badge">
+          IP: <span id="ip-address">Loading...</span>
         </div>
       </div>
 
-      <div class="location-right">
-        <div class="signal">
-          <span></span><span></span><span></span><span></span>
-        </div>
-        <span class="material-symbols-outlined">expand_more</span>
+      <div class="power-container">
+        <div class="ring-outer"></div>
+        <div class="ring-inner"></div>
+        <div class="glow-bg" id="power-glow"></div>
+        <button id="power-btn" class="power-btn">
+          <div class="btn-gradient"></div>
+          <svg class="power-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M13,3h-2v10h2V3z M17.83,5.17l-1.42,1.42C17.99,7.86,19,9.81,19,12c0,3.87-3.13,7-7,7s-7-3.13-7-7 c0-2.19,1.01-4.14,2.58-5.42L6.17,5.17C4.23,6.82,3,9.26,3,12c0,4.97,4.03,9,9,9s9-4.03,9-9C21,9.26,19.77,6.82,17.83,5.17z"/>
+          </svg>
+        </button>
       </div>
-    </section>
 
-    <!-- SPEED -->
-    <section class="speed">
-      <div>↓ 0.0 MB/s</div>
-      <div>↑ 0.0 MB/s</div>
-    </section>
+      <div class="info-card">
+        <div class="timer-section">
+          <span class="label">CONNECTION TIME</span>
+          <span class="timer-display" id="timer">00:00:00</span>
+        </div>
 
+        <div class="location-section" id="location-wrapper">
+          <div class="location-info">
+            <div class="flag-icon" id="current-flag">
+              <svg viewBox="0 0 640 480" preserveAspectRatio="none"><path fill="#bd3d44" d="M0 0h640v480H0"/><path stroke="#fff" stroke-width="37" d="M0 55.3h640M0 129h640M0 202.8h640M0 276.5h640M0 350.2h640M0 423.9h640"/><path fill="#192f5d" d="M0 0h273.4v246.1H0"/><path fill="#fff" d="M25.7 18.5h222v209.1h-222z"/><path fill="#192f5d" d="M26 19h221v208H26z"/><g fill="#fff"><path d="M43.7 34l2 6.6h6.9l-5.6 4 2.1 6.6-5.4-4-5.4 4 2-6.6-5.5-4h6.9zm41 0l2 6.6h6.9l-5.6 4 2.1 6.6-5.4-4-5.4 4 2-6.6-5.5-4h6.9zm41 0l2 6.6h6.9l-5.6 4 2.1 6.6-5.4-4-5.4 4 2-6.6-5.5-4h6.9zm41 0l2 6.6h6.9l-5.6 4 2.1 6.6-5.4-4-5.4 4 2-6.6-5.5-4h6.9zm41 0l2 6.6h6.9l-5.6 4 2.1 6.6-5.4-4-5.4 4 2-6.6-5.5-4h6.9zM64 69.8l2 6.6h6.9l-5.6 4 2.1 6.6-5.4-4-5.4 4 2-6.6-5.5-4h6.9zm41 0l2 6.6h6.9l-5.6 4 2.1 6.6-5.4-4-5.4 4 2-6.6-5.5-4h6.9zm41 0l2 6.6h6.9l-5.6 4 2.1 6.6-5.4-4-5.4 4 2-6.6-5.5-4h6.9zm41 0l2 6.6h6.9l-5.6 4 2.1 6.6-5.4-4-5.4 4 2-6.6-5.5-4h6.9zM43.7 105.7l2 6.6h6.9l-5.6 4 2.1 6.6-5.4-4-5.4 4 2-6.6-5.5-4h6.9zm41 0l2 6.6h6.9l-5.6 4 2.1 6.6-5.4-4-5.4 4 2-6.6-5.5-4h6.9zm41 0l2 6.6h6.9l-5.6 4 2.1 6.6-5.4-4-5.4 4 2-6.6-5.5-4h6.9zm41 0l2 6.6h6.9l-5.6 4 2.1 6.6-5.4-4-5.4 4 2-6.6-5.5-4h6.9zm41 0l2 6.6h6.9l-5.6 4 2.1 6.6-5.4-4-5.4 4 2-6.6-5.5-4h6.9zM64 141.5l2 6.6h6.9l-5.6 4 2.1 6.6-5.4-4-5.4 4 2-6.6-5.5-4h6.9zm41 0l2 6.6h6.9l-5.6 4 2.1 6.6-5.4-4-5.4 4 2-6.6-5.5-4h6.9zm41 0l2 6.6h6.9l-5.6 4 2.1 6.6-5.4-4-5.4 4 2-6.6-5.5-4h6.9zm41 0l2 6.6h6.9l-5.6 4 2.1 6.6-5.4-4-5.4 4 2-6.6-5.5-4h6.9zM43.7 177.4l2 6.6h6.9l-5.6 4 2.1 6.6-5.4-4-5.4 4 2-6.6-5.5-4h6.9zm41 0l2 6.6h6.9l-5.6 4 2.1 6.6-5.4-4-5.4 4 2-6.6-5.5-4h6.9zm41 0l2 6.6h6.9l-5.6 4 2.1 6.6-5.4-4-5.4 4 2-6.6-5.5-4h6.9zm41 0l2 6.6h6.9l-5.6 4 2.1 6.6-5.4-4-5.4 4 2-6.6-5.5-4h6.9zm41 0l2 6.6h6.9l-5.6 4 2.1 6.6-5.4-4-5.4 4 2-6.6-5.5-4h6.9zM64 213.2l2 6.6h6.9l-5.6 4 2.1 6.6-5.4-4-5.4 4 2-6.6-5.5-4h6.9zm41 0l2 6.6h6.9l-5.6 4 2.1 6.6-5.4-4-5.4 4 2-6.6-5.5-4h6.9zm41 0l2 6.6h6.9l-5.6 4 2.1 6.6-5.4-4-5.4 4 2-6.6-5.5-4h6.9zm41 0l2 6.6h6.9l-5.6 4 2.1 6.6-5.4-4-5.4 4 2-6.6-5.5-4h6.9z"/></g></svg>
+            </div>
+            <div class="location-text">
+              <span class="sub">Selected Location</span>
+              <select id="location-select">
+                <option value="us">United States</option>
+                <option value="uk">United Kingdom</option>
+                <option value="de">Germany</option>
+              </select>
+            </div>
+          </div>
+          <div class="signal-bars">
+             <div class="bar h1 active"></div>
+             <div class="bar h2 active"></div>
+             <div class="bar h3 active"></div>
+             <div class="bar h4"></div>
+          </div>
+        </div>
+
+        <div class="metrics">
+          <div class="metric">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11,9l-4,4l4,4V15h8v-2h-8V9z"/></svg>
+            <span id="speed-down">0.0 MB/s</span>
+          </div>
+          <div class="metric">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13,9V5H5v2h8v2l4-4L13,9z"/></svg>
+            <span id="speed-up">0.0 MB/s</span>
+          </div>
+        </div>
+      </div>
+    </main>
   </div>
+  <script src="popup.js"></script>
 </body>
 </html>
